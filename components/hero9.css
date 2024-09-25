@@ -1,0 +1,111 @@
+.hero9-header30 {
+  gap: var(--dl-space-space-twounits);
+}
+.hero9-image {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  object-fit: cover;
+}
+.hero9-container {
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  bottom: 0px;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-direction: column;
+  background-color: rgba(255,255,255,0.7);
+}
+.hero9-max-width {
+  gap: var(--dl-space-space-oneandhalfunits);
+  width: 100%;
+  display: flex;
+  z-index: 1;
+  align-items: center;
+  flex-direction: column;
+}
+.hero9-content {
+  gap: var(--dl-space-space-oneandhalfunits);
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  flex-direction: column;
+}
+.hero9-text {
+  text-align: center;
+}
+.hero9-text1 {
+  text-align: center;
+}
+.hero9-actions {
+  gap: var(--dl-space-space-unit);
+  display: flex;
+  align-items: flex-start;
+}
+.hero9-text2 {
+  text-align: center;
+}
+.hero9-text3 {
+  text-align: center;
+}
+.hero9-root-class-name {
+  fill: var(--dl-color-theme-neutral-dark);
+  color: var(--dl-color-theme-neutral-dark);
+}
+@media(max-width: 991px) {
+  .hero9-container {
+    box-shadow: 5px 5px 10px 0px #d4d4d4;
+  }
+  .hero9-text {
+    text-align: center;
+  }
+  .hero9-text1 {
+    text-align: center;
+  }
+}
+@media(max-width: 479px) {
+  .hero9-image {
+    opacity: 1;
+    z-index: 100;
+    box-shadow: 5px 5px 60px 100px #f9f0f0;
+    border-radius: var(--dl-radius-radius-radius4);
+  }
+  .hero9-container {
+    display: none;
+    z-index: 100;
+    box-shadow: 5px 5px 10px 0px #d4d4d4;
+    border-color: var(--dl-color-theme-neutral-dark);
+    border-width: 1px;
+    border-radius: var(--dl-radius-radius-radius4);
+    animation-name: none;
+    animation-delay: 0s;
+    animation-duration: 300ms;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-timing-function: ease;
+  }
+  .hero9-text {
+    fill: var(--dl-color-theme-primary1);
+    color: var(--dl-color-theme-primary1);
+  }
+  .hero9-text1 {
+    fill: var(--dl-color-theme-primary1);
+    color: var(--dl-color-theme-primary1);
+  }
+  .hero9-actions {
+    width: 100%;
+    flex-direction: column;
+  }
+  .hero9-button {
+    width: 100%;
+  }
+  .hero9-button1 {
+    width: 100%;
+  }
+}

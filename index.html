@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKSpeed</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="public/tengrai_image_1717599816_4708312-200h.jpg" type="image/jpeg">
+    <style>
+        .navbar {
+            margin-bottom: 0;
+            border-radius: 0;
+        }
+
+        .jumbotron {
+            position: relative;
+            color: rgb(15, 13, 13);
+            padding-top: 120px;
+            padding-bottom: 120px;
+            z-index: 1;
+        }
+
+        .jumbotron::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1623785400459-1aceaf439664?ixid=M3w5MTMyMXwwfDF8c2VhcmNofDE3fHxNb3RvcnNwb3J0fGVufDB8fHx8MTcxOTg5NTYxOHww&amp;ixlib=rb-4.0.3&amp;w=1500') no-repeat center center;
+            background-size: cover;
+            opacity: 0.4;
+            /* Adjust the opacity here */
+            z-index: -1;
+        }
+
+        .jumbotron h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .jumbotron p {
+            font-size: 1.25rem;
+            margin-bottom: 100px;
+        }
+
+        .btn-reservasi,
+        .btn-sparepart {
+            font-size: 1.25rem;
+            padding: 10px 20px;
+        }
+
+        .btn-reservasi {
+            background-color: rgb(177, 0, 0);
+            color: white;
+            border: none;
+        }
+
+        .btn-sparepart {
+            background-color: rgb(177, 0, 0);
+            color: white;
+            border: none;
+        }
+
+        .navbar-brand img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+        }
+
+        .section-title {
+            text-align: left;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        #hubungi_kami .contact-item {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        #hubungi_kami .contact-item i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        #hubungi_kami .contact-item h4 {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        #chatbotToggle img {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+
+        .chatbot-window {
+            display: none;
+            width: 300px;
+            height: 400px;
+            background-color: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .chatbot-header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-body {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            height: calc(100% - 50px);
+        }
+
+        .chatbot-messages {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        .message {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .message.user {
+            background-color: #dcf8c6;
+            align-self: flex-end;
+        }
+
+        .message.bot {
+            background-color: #f1f0f0;
+            align-self: flex-start;
+        }
+
+        #userInput {
+            flex: none;
+            border: 1px solid #ccc;
+            padding: 5px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        #sendMessage {
+            flex: none;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        #sendMessage:hover {
+            background-color: #0056b3;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+            /* Add space between rows */
+        }
+
+        .card {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: top;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .card-galeri-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .card-galeri {
+            width: 350px;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card-galeri:hover {
+            transform: scale(1.05);
+        }
+
+        .card-galeri img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .main-content h3 {
+            line-height: 2.5;
+            text-align: center;
+        }
+
+        .main-content p {
+            line-height: 1.5;
+            text-align: justify;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <a class="navbar-brand" href="#"><img src="public/tengrai_image_1717599816_4708312-1500h.jpeg" alt="Logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="btn btn-outline-primary ml-2" href="#home">Home</a></li>
+                <li class="nav-item"><a class="btn btn-outline-primary ml-2" href="#Layanan">Layanan</a></li>
+                <li class="nav-item"><a class="btn btn-outline-primary ml-2" href="#sparepart">Spareparts</a></li>
+                <li class="nav-item"><a class="btn btn-outline-primary ml-2" href="#tentang">Tentang Kami</a></li>
+                <li class="nav-item"><a class="btn btn-outline-primary ml-2" href="#galeri">Galeri</a></li>
+                <li class="nav-item"><a class="btn btn-outline-primary ml-2" href="#hubungi_kami">Hubungi Kami</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="home" class="jumbotron text-center">
+        <div class="container">
+            <h1>Selamat Datang di Bengkel Sepeda Motor AKSpeed</h1>
+            <p>Kami berkomitmen untuk memberikan Layanan perawatan dan perbaikan sepeda motor terbaik dengan harga yang
+                terjangkau. Dengan teknisi profesional dan berpengalaman, kami siap membantu Anda menjaga performa
+                sepeda motor Anda agar tetap optimal.</p>
+            <a href="https://wa.me/6281234567890 " class="btn btn-reservasi mr-2">Reservasi</a>
+        </div>
+    </div>
+
+
+    <!-- Page Layanan -->
+    <div id="Layanan" class="section">
+        <div class="container">
+            <h2 class="section-title">Layanan</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <!--Gambar Kiri-->
+                    <div class="card">
+                        <img src="Layanan/1. Service Rutin/car-wheel-vehicle-motor-vehicle-engine-mazda-288467-pxhere.jpg"
+                            alt="service-rutin">
+                        <div class="card-body">
+                            <h3 class="card-title">Servis Rutin</h3>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#infoService">
+                                Info Selengkapnya
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Service -->
+                <div class="modal fade" id="infoService" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="infoModalLabel">Detail Servis Rutin</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="carouselServiceRutin" class="carousel slide" data-ride="carousel"
+                                    data-interval="5000">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carouselServiceRutin" data-slide-to="0" class="active">
+                                        </li>
+                                        <li data-target="#carouselServiceRutin" data-slide-to="1"></li>
+                                        <li data-target="#carouselServiceRutin" data-slide-to="2"></li>
+                                    </ol>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img class="d-block w-100"
+                                                src="Layanan/1. Service Rutin/resize/car-wheel-vehicle-motor-vehicle-engine-mazda-288467-pxhere.com.jpg"
+                                                alt="First slide">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="Layanan/1. Service Rutin/resize/KN-204-1_4.jpg" alt="Second slide">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="Layanan/1. Service Rutin/resize/work-technology-wheel-round-steel-transportation-1012564-pxhere.com.jpg"
+                                                alt="Third slide">
+                                        </div>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselServiceRutin" role="button"
+                                        data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselServiceRutin" role="button"
+                                        data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                                <div class="mt-4">
+                                    <ul>
+                                        <li>Penggantian oli mesin</li>
+                                        <li>Penggantian filter oli</li>
+                                        <li>Pemeriksaan dan penggantian busi</li>
+                                        <li>Pembersihan atau penggantian filter udara</li>
+                                        <li>Penyetingan karburator atau throttle body (injeksi)</li>
+                                        <li>Penggantian oli gardan (untuk motor matic)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Gambar Tengah-->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="Layanan/thumbails/perawatan_rutin.jpg" alt="perawatan_rutin">
+                        <div class="card-body">
+                            <h3 class="card-title">Perawatan Rutin</h3>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#infoPerawatan">
+                                Info Selengkapnya
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal Perawatan Rutin -->
+                <div class="modal fade" id="infoPerawatan" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="infoModalLabel">Detail Perawatan Rutin</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="carouselPerawatanRutin" class="carousel slide" data-ride="carousel"
+                                    data-interval="5000">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carouselPerawatanRutin" data-slide-to="0" class="active">
+                                        </li>
+                                        <li data-target="#carouselPerawatanRutin" data-slide-to="1"></li>
+                                    </ol>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img class="d-block w-100"
+                                                src="Layanan/2. Perawatan Rutin/resize/Coolant5.jpg" alt="First slide">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="Layanan/2. Perawatan Rutin/resize/how-to-check-your-motorcycles-tire-pressure-606c0f19f3033.jpg"
+                                                alt="Second slide">
+                                        </div>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselPerawatanRutin" role="button"
+                                        data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselPerawatanRutin" role="button"
+                                        data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                                <div class="mt-4">
+                                    <ul>
+                                        <li>Pelumasan rantai dan pemeriksaan ketegangan rantai</li>
+                                        <li>Pemeriksaan dan penggantian kampas rem</li>
+                                        <li>Penyelarasan roda dan ban</li>
+                                        <li>Pemeriksaan dan pengisian air radiator (untuk motor dengan sistem pendingin
+                                            cairan)</li>
+                                        <li>Penggantian cairan rem</li>
+                                        <li>Pemeriksaan dan penggantian bohlam lampu</li>
+                                        <li>Pemeriksaan dan pengisian oli rem</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Gambar Kanan-->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="Layanan/thumbails/perbaikan_mesin.jpg" alt="perbaikan_mesin">
+                        <div class="card-body">
+                            <h3 class="card-title">Perbaikan Mesin</h3>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#PerbaikanMesin">
+                                Info Selengkapnya
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Perbaikan Mesin -->
+            <div class="modal fade" id="PerbaikanMesin" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="infoModalLabel">Detail Perbaikan Mesin</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="carouselPerbaikanMesin" class="carousel slide" data-ride="carousel"
+                                data-interval="5000">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#carouselPerbaikanMesin" data-slide-to="0" class="active">
+                                    </li>
+                                    <li data-target="#carouselPerbaikanMesin" data-slide-to="1"></li>
+                                    <li data-target="#carouselPerbaikanMesin" data-slide-to="2"></li>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img class="d-block w-100"
+                                            src="Layanan/3. Perbaikan Mesin/resize/R2JZQO365ZDBSZQ3NI5Y7QMIHQ.jpg"
+                                            alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100"
+                                            src="Layanan/3. Perbaikan Mesin/resize/K5A6XCZAAGE2MZYKVHDICUWPX4.jpg"
+                                            alt="Second slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100"
+                                            src="Layanan/1. Service Rutin/resize/work-technology-wheel-round-steel-transportation-1012564-pxhere.com.jpg"
+                                            alt="Third slide">
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselPerbaikanMesin" role="button"
+                                    data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselPerbaikanMesin" role="button"
+                                    data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                            <div class="mt-4">
+                                <ul>
+                                    <li>Overhaul mesin</li>
+                                    <li>Penggantian piston</li>
+                                    <li>Penggantian ring piston</li>
+                                    <li>Penggantian klep</li>
+                                    <li>Pemeriksaan dan penggantian gasket mesin</li>
+                                    <li>Penggantian rantai keteng</li>
+                                    <li>Penggantian rantai timing</li>
+                                    <li>Perbaikan atau penggantian noken as</li>
+                                    <li>Penggantian bearing mesin</li>
+                                    <li>Penggantian poros engkol</li>
+                                    <li>Penggantian silinder head</li>
+                                    <li>Penggantian kopling</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <!--Gambar Kiri-->
+                    <div class="card">
+                        <img src="Layanan/thumbails/perbaikan_kelistrikan.jpg" alt="perbaikan_kelistrikan">
+                        <div class="card-body">
+                            <h3 class="card-title">Perbaikan Kelistrikan
+                            </h3>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#infoPerbaikanKelistrikan">
+                                Info Selengkapnya
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Perbaikan Kelistrikan -->
+                <div class="modal fade" id="infoPerbaikanKelistrikan" tabindex="-1" role="dialog"
+                    aria-labelledby="infoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="infoModalLabel">Detail Perbaikan Kelistrikan</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="carouselPerbaikanMesin" class="carousel slide" data-ride="carousel"
+                                    data-interval="5000">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carouselPerbaikanMesin" data-slide-to="0" class="active">
+                                        </li>
+                                    </ol>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img class="d-block w-100"
+                                                src="Layanan/4. Perbaikan Kelistrikan/Motorcycle-Electrical-Work-Brisbane-Repairs(800x400).jpg"
+                                                alt="First slide">
+                                        </div>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselPerbaikanMesin" role="button"
+                                        data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselPerbaikanMesin" role="button"
+                                        data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                                <div class="mt-4">
+                                    <ul>
+                                        <li>Pemeriksaan dan penggantian aki</li>
+                                        <li>Perbaikan sistem starter</li>
+                                        <li>Pemeriksaan dan perbaikan sistem pengapian</li>
+                                        <li>Perbaikan lampu dan sistem kelistrikan lainnya</li>
+                                        <li>Penggantian sekring</li>
+                                        <li>Pemeriksaan dan penggantian kabel bodi</li>
+                                        <li>Perbaikan atau penggantian CDI</li>
+                                        <li>Perbaikan atau penggantian regulator rectifier</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Gambar Tengah-->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="Layanan/thumbails/perbaikan_suspensi.jpg" alt="perbaikan_suspensi">
+                        <div class="card-body">
+                            <h3 class="card-title">Perbaikan Suspensi</h3>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#infoPerbaikanSistemSuspensi">
+                                Info Selengkapnya
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Perbaikan Suspensi -->
+                <div class="modal fade" id="infoPerbaikanSistemSuspensi" tabindex="-1" role="dialog"
+                    aria-labelledby="infoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="infoModalLabel">Detail Perbaikan Sistem Suspensi</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="carouselPerawatanSuspensi" class="carousel slide" data-ride="carousel"
+                                    data-interval="5000">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carouselPerawatanSuspensi" data-slide-to="0" class="active">
+                                        </li>
+                                        <li data-target="#carouselPerawatanSuspensi" data-slide-to="1"></li>
+                                        <li data-target="#carouselPerawatanSuspensi" data-slide-to="2"></li>
+                                    </ol>
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img class="d-block w-100"
+                                                src="Layanan/5. Perbaikan Sistem Suspensi/resize/ciri-shockbreaker-motor (1)_20240321.jpg"
+                                                alt="First slide">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="Layanan/5. Perbaikan Sistem Suspensi/resize/Cara-Merawat-Shockbreaker-Motor.jpg"
+                                                alt="Second slide">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="Layanan/5. Perbaikan Sistem Suspensi/resize/IMG_8159.jpg"
+                                                alt="Third slide">
+                                        </div>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselPerawatanSuspensi" role="button"
+                                        data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselPerawatanSuspensi" role="button"
+                                        data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                                <div class="mt-4">
+                                    <ul>
+                                        <li>Penggantian atau perbaikan shock absorber depan</li>
+                                        <li>Penggantian atau perbaikan shock absorber belakang</li>
+                                        <li>Pemeriksaan dan penggantian bearing roda</li>
+                                        <li>Pemeriksaan dan penggantian seal shock depan</li>
+                                        <li>Pemeriksaan dan penggantian oli shock depan</li>
+                                        <li>Penyelarasan suspensi</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--Gambar Kanan-->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="Layanan/thumbails/antarafoto-aksi-pebalap-wsbk-pada-sesi-latihan-bebas-kedua-030323-as-4.jpg"
+                            alt="Another Service">
+                        <div class="card-body">
+                            <h3 class="card-title">Upgrade dan Modifikasi</h3>
+                            <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#infoUpgradeDanModifikasi">
+                                Info Selengkapnya
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Upgrade dan Modifikasi -->
+            <div class="modal fade" id="infoUpgradeDanModifikasi" tabindex="-1" role="dialog"
+                aria-labelledby="infoModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="infoModalLabel">Detail Upgrade dan Modifikasi</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div id="carouselUpgradeDanModifikasi" class="carousel slide" data-ride="carousel"
+                                data-interval="5000">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#carouselUpgradeDanModifikasi" data-slide-to="0" class="active">
+                                    </li>
+                                    <li data-target="#carouselUpgradeDanModifikasi" data-slide-to="1"></li>
+                                </ol>
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <img class="d-block w-100"
+                                            src="Layanan/6. Upgrade dan Modifikasi/resize/antarafoto-aksi-pebalap-wsbk-pada-sesi-latihan-bebas-kedua-030323-as-4.jpg"
+                                            alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                        <img class="d-block w-100"
+                                            src="Layanan/6. Upgrade dan Modifikasi/resize/bg-r1-2022-Yamaha.jpg"
+                                            alt="Second slide">
+                                    </div>
+                                </div>
+                                <a class="carousel-control-prev" href="#carouselUpgradeDanModifikasi" role="button"
+                                    data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carouselUpgradeDanModifikasi" role="button"
+                                    data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                </a>
+                            </div>
+                            <div class="mt-4">
+                                <ul>
+                                    <li>Pemasangan aksesoris tambahan seperti box, windshield, dll.</li>
+                                    <li>Modifikasi mesin untuk meningkatkan performa</li>
+                                    <li>Modifikasi estetika seperti pengecatan custom atau pemasangan decal</li>
+                                    <li>Pemasangan knalpot racing</li>
+                                    <li>Penggantian velg</li>
+                                    <li>Penggantian ban dengan ukuran yang berbeda</li>
+                                    <li>Pemasangan lampu LED</li>
+                                    <li>Pemasangan sistem audio pada motor</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    <!--Page Spare Parts-->
+    <div id="sparepart" class="section">
+        <div class="container">
+            <h2 class="section-title">Daftar Harga Spare Part Motor</h2>
+            <div class="row">
+                <!-- Spare Part Item 1 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="Spareparts/ok/kampas_rem.jpg" alt="Kampas Rem">
+                        <div class="card-body">
+                            <h5 class="card-title">Brake Pad/Kampas Rem</h5>
+                            <p class="card-text">Rp 40.000-250.000</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Spare Part Item 2 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="Spareparts/ok/minyak_rem.jpg" alt="Minyak Rem">
+                        <div class="card-body">
+                            <h5 class="card-title">Brake Fluid/Minyak Rem</h5>
+                            <p class="card-text">Rp 10.000-70.000</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Spare Part Item 3 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="Spareparts/ok/oli_motor.jpg" alt="Oli Mesin">
+                        <div class="card-body">
+                            <h5 class="card-title">Engine Oil/Oli Mesin</h5>
+                            <p class="card-text">Rp 60.000-150.000/Liter</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Spare Part Item 4 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="Spareparts/ok/4. Busi.jpg" alt="Spark Plugs/Busi">
+                        <div class="card-body">
+                            <h5 class="card-title">Spark Plugs/Busi</h5>
+                            <p class="card-text">Rp 20.000-100.000</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Spare Part Item 5 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="Spareparts/ok/5. Filter Udara.jpg" alt="Air Filter/Filter Udara">
+                        <div class="card-body">
+                            <h5 class="card-title">Air Filter/Filter Udara</h5>
+                            <p class="card-text">Rp 35.000-400.000</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Spare Part Item 6 -->
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="Spareparts/ok/6. Rantai & Gir.jpg"
+                            alt="Chain & Sprocket/ Rantai & Gir">
+                        <div class="card-body">
+                            <h5 class="card-title">Chain & Sprocket/ Rantai & Gir</h5>
+                            <p class="card-text">Rp 125.000-500.000</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Add more items as needed -->
+            </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#1">1</a></li>
+                    <!-- <li class="page-item"><a class="page-link" href="#2">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#3">3</a></li> -->
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!--Page tentang-->
+        <div id="tentang" class="section">
+            <div class="container">
+                <h2 class="section-title">Tentang Bengkel Kami</h2>
+            </div>
+            <div class="main-content">
+                <h3>Sejarah dan Visi Misi</h3>
+                <p>Kami adalah perusahaan yang berdedikasi untuk memberikan layanan terbaik kepada pelanggan kami. Dengan tim profesional dan berpengalaman, kami selalu berusaha untuk memenuhi kebutuhan dan harapan Anda. Kami percaya pada nilai-nilai integritas, kualitas, dan pelayanan prima. Terima kasih telah mempercayakan kebutuhan Anda kepada kami.</p>
+            </div>
+
+            <div class="main-content">
+                <h3>Profil Tim</h3>
+                <p>Tim kami terdiri dari mekanik berpengalaman yang selalu siap memberikan solusi terbaik untuk kendaraan Anda. Kami juga terus meningkatkan kemampuan melalui pelatihan dan sertifikasi.</p>
+            </div>
+        </div>
+
+        <!--Page galeri-->
+        <div id="galeri" class="section">
+            <div class="container">
+                <h2 class="section-title">Galeri</h2>
+                <div class="card-galeri-container">
+                    <div class="card-galeri">
+                        <img src="galeri/1.jpg" alt="Card Image">
+                    </div>
+                    <div class="card-galeri">
+                        <img src="galeri/2.jpg" alt="Card Image">
+                    </div>
+                    <div class="card-galeri">
+                        <img src="galeri/3.jpg" alt="Card Image">
+                    </div>
+            </div>
+        </div>
+
+        <!--Page Hubungi Kami-->
+        <div id="hubungi_kami" class="section">
+            <div class="container">
+                <h2 class="section-title">Kontak Kami</h2>
+                <div class="row">
+                    <div class="col-md-4 contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <h4>Email</h4>
+                        <p>Untuk kerja sama dan layanan pelanggan</p>
+                        <p>PenulisanIlmiah@AKSgroup.com</p>
+                    </div>
+                    <div class="col-md-4 contact-item">
+                        <i class="fas fa-phone"></i>
+                        <h4>Phone</h4>
+                        <p>Untuk Reservasi & Pelayanan Pelanggan</p>
+                        <p>0812-3456-7890</p>
+                    </div>
+                    <div class="col-md-4 contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h4>Location</h4>
+                        <p>Datang langsung ke Bengkel kami</p>
+                        <p>JL. Sistem Informasi, Depok, Jawa Baraty</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--Chatbot-->
+        <div class="chatbot">
+            <button id="chatbotToggle">
+                <img src="https://png.pngtree.com/template/20190309/ourmid/pngtree-chat-message-variation-image_64198.jpg"
+                    alt="Chatbot">
+            </button>
+            <div id="chatbotWindow" class="chatbot-window">
+                <div class="chatbot-header">
+                    <h4>Chatbot</h4>
+                    <button id="closeChatbot">X</button>
+                </div>
+                <div class="chatbot-body">
+                    <div id="chatbotMessages" class="chatbot-messages">
+                        <!-- Messages will appear here -->
+                    </div>
+                    <input type="text" id="userInput" placeholder="Type a message...">
+                    <button id="sendMessage">Send</button>
+                </div>
+            </div>
+        </div>
+        <script src="scripts.js"></script>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('a.nav-link').on('click', function (event) {
+                    if (this.hash !== "") {
+                        event.preventDefault();
+                        var hash = this.hash;
+                        $('html, body').animate({
+                            scrollTop: $(hash).offset().top
+                        }, 800, function () {
+                            window.location.hash = hash;
+                        });
+                    }
+                });
+            });
+        </script>
+
+
+</body>
+
+</html>
